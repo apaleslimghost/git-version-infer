@@ -1,0 +1,20 @@
+{
+  "name": "@quarterto/heroku-version-infer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Matt Brennan <matt@153.io> (http://blog.153.io/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quarterto/heroku-version-infer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/quarterto/heroku-version-infer/issues"
+  },
+  "homepage": "https://github.com/quarterto/heroku-version-infer#readme",
+  "description": ""
+}
