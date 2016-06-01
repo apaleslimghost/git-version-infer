@@ -2,9 +2,7 @@
   "name": "@quarterto/heroku-version-infer",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "bin": "bin.js",
   "keywords": [],
   "author": "Matt Brennan <matt@153.io> (http://blog.153.io/)",
   "license": "MIT",
