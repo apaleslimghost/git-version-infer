@@ -14,5 +14,9 @@
     "url": "https://github.com/quarterto/heroku-version-infer/issues"
   },
   "homepage": "https://github.com/quarterto/heroku-version-infer#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@quarterto/spawn": "^1.1.0",
+    "temp": "^0.8.3"
+  }
 }
