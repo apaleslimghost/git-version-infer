@@ -21,7 +21,7 @@ const parseGithubUrl = url => {
 const gh = parseGithubUrl(herokuReceiveData.deploy_source);
 const cloneUrl = `https://github.com/${gh.user}/${gh.repo}.git`;
 
-const dir = temp.mkdirSync('clone');
+const dir = temp.mkdirSync(gh.repo);
 spawn('git', ['clone', '--bare', cloneUrl, dir]);
 
 const oldDir = process.cwd();
