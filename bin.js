@@ -6,7 +6,7 @@ const spawn = require('@quarterto/spawn');
 const path = require('path');
 
 const packagePath = path.resolve('package.json');
-const {repository} = require(packagePath);
+const repository = require(packagePath).repository;
 
 if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'heroku-postbuild') {
 	console.log('⤼ not a Heroku automatic deploy, skipping version inference');
