@@ -6,18 +6,18 @@ const spawn = require('@quarterto/spawn');
 const path = require('path');
 
 const packagePath = path.resolve('package.json');
-const repository = require(packagePath).repository;
+const p = require(packagePath);
 
 if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'heroku-postbuild') {
 	console.log('⤼ not a Heroku automatic deploy, skipping version inference');
 	process.exit(0);
-} else if(!repository) {
+} else if(!p.repository) {
 	console.log('⊶ expected a repository field in your package.json');
 	process.exit(1);
-} else if(typeof repository !== 'string' && !repository.url) {
-	console.log('⊶ invalid repository entry in package.json, no url:', repository);
+} else if(typeof p.repository !== 'string' && !p.repository.url) {
+	console.log('⊶ invalid repository entry in package.json, no url:', p.repository);
 	process.exit(1);
-} else if(!repository.type === 'git') {
+} else if(!p.repository.type === 'git') {
 	console.log('⊶ non-git repositories not supported');
 	process.exit(1);
 } else if(!process.env.SOURCE_VERSION) {
@@ -25,7 +25,7 @@ if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'herok
 	console.log(process.env);
 	process.exit(1);
 } else {
-	const version = infer(typeof repository === 'string' ? repository : repository.url , process.env.SOURCE_VERSION, gh.repo);
+	const version = infer(typeof p.repository === 'string' ? p.repository : p.repository.url, process.env.SOURCE_VERSION, p.name);
 
 	console.log(`inferred version ${version}`);
 	spawn('npm', ['version', '--git-tag-version=false', version]);
