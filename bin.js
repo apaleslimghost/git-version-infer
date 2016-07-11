@@ -25,7 +25,8 @@ if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'herok
 	console.log(process.env);
 	process.exit(1);
 } else {
-	const version = infer(typeof p.repository === 'string' ? p.repository : p.repository.url, process.env.SOURCE_VERSION, p.name);
+	const repo = typeof p.repository === 'string' ? p.repository : p.repository.url;
+	const version = infer(repo.replace(/^git\+/i, ''), process.env.SOURCE_VERSION, p.name);
 
 	console.log(`inferred version ${version}`);
 	spawn('npm', ['version', '--git-tag-version=false', version]);
