@@ -14,7 +14,7 @@ if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'herok
 } else if(!repository) {
 	console.log('⊶ expected a repository field in your package.json');
 	process.exit(1);
-} else if(typeof repository !== 'string' || !repository.url) {
+} else if(typeof repository !== 'string' && !repository.url) {
 	console.log('⊶ invalid repository entry in package.json, no url:', repository);
 	process.exit(1);
 } else if(!repository.type === 'git') {
