@@ -2,8 +2,9 @@
 'use strict';
 
 const infer = require('./');
-const spawn = require('@quarterto/spawn');
+const spawn = require('cross-spawn-promise');
 const path = require('path');
+const logPromise = require('@quarterto/log-promise');
 
 const packagePath = path.resolve('package.json');
 const p = require(packagePath);
@@ -26,8 +27,10 @@ if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'herok
 	process.exit(1);
 } else {
 	const repo = typeof p.repository === 'string' ? p.repository : p.repository.url;
-	const version = infer(repo.replace(/^git\+/i, ''), process.env.SOURCE_VERSION, p.name);
-
-	console.log(`inferred version ${version}`);
-	spawn('npm', ['version', '--git-tag-version=false', version]);
+	logPromise(
+		version => `inferred version ${version}`,
+		err => err.stack
+	)(infer(repo.replace(/^git\+/i, ''), process.env.SOURCE_VERSION, p.name.replace('/', '-')).then(version => {
+		return spawn('npm', ['version', '--git-tag-version=false', version]).then(() => version);
+	})).catch(() => process.exit(1));
 }
