@@ -1,7 +1,7 @@
 {
   "name": "@quarterto/heroku-version-infer",
   "version": "3.2.3",
-  "main": "index.js",
+  "main": "lib/index.js",
   "bin": "bin.js",
   "keywords": [],
   "author": "Matt Brennan <matt@153.io> (http://blog.153.io/)",
@@ -16,7 +16,19 @@
   "homepage": "https://github.com/quarterto/heroku-version-infer#readme",
   "description": "",
   "dependencies": {
+    "@quarterto/log-promise": "^1.1.0",
+    "@quarterto/promisify": "^1.0.0",
     "@quarterto/spawn": "^1.1.0",
+    "babel-runtime": "^6.11.6",
+    "cross-spawn-promise": "^0.6.0",
     "temp": "^0.8.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-plugin-transform-async-to-generator": "^6.8.0",
+    "babel-preset-es2015-node6": "^0.3.0"
+  },
+  "scripts": {
+    "prepublish": "mkdir -p lib ; babel -o lib/index.js src/index.js"
   }
 }
