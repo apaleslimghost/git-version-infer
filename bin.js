@@ -30,7 +30,12 @@ if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'herok
 	logPromise(
 		version => `inferred version ${version}`,
 		err => err.stack
-	)(infer(repo.replace(/^git\+/i, ''), process.env.SOURCE_VERSION, p.name.replace('/', '-')).then(version => {
+	)(infer({
+		remote: repo.replace(/^git\+/i, ''),
+		commitish: process.env.SOURCE_VERSION,
+		dirName: p.name.replace('/', '-'),
+		allCommits: process.argv.slice(2).includes('--all-commits')
+	}).then(version => {
 		return spawn('npm', ['version', '--git-tag-version=false', version]).then(() => version);
 	})).catch(() => process.exit(1));
 }
