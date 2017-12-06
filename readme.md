@@ -1,9 +1,9 @@
-# heroku-version-infer
+# git-version-infer
 
 infers app versions for automatic heroku deploys and [ci builds](#which-ci)
 
 ```sh
-npm install --save @quarterto/heroku-version-infer
+npm install --save @quarterto/git-version-infer
 ```
 
 ```json
@@ -11,14 +11,14 @@ npm install --save @quarterto/heroku-version-infer
   "name": "my-awesome-heroku-app",
   "version": "0.0.0-development",
   "scripts": {
-    "postinstall": "heroku-version-infer"
+    "postinstall": "git-version-infer"
   }
 }
 ```
 
 ## why
 
-because you want to tag versions for things like error reporting, QA, Tim writing on whiteboards, but you don't want to manually tag things. heroku-version-infer comes up with an arbitrary monotonically increasing version number automatically, so you don't have to.
+because you want to tag versions for things like error reporting, QA, Tim writing on whiteboards, but you don't want to manually tag things. git-version-infer comes up with an arbitrary monotonically increasing version number automatically, so you don't have to.
 
 ## how
 
@@ -31,7 +31,7 @@ the inferred version is written to the `version` field in `package.json`. you're
 if you use squash merging via GitHub or you can otherwise guarantee that each commit to master is a version, then you can use the `--all-commits` flag to take *every* commit into account rather than just merges:
 
 ```sh
-heroku-version-infer --all-commits
+git-version-infer --all-commits
 ```
 
 ## which ci
