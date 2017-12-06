@@ -1,6 +1,6 @@
 {
   "name": "@quarterto/git-version-infer",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "main": "lib/index.js",
   "bin": "bin.js",
   "keywords": [],
