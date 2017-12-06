@@ -9,8 +9,18 @@ const logPromise = require('@quarterto/log-promise');
 const packagePath = path.resolve('package.json');
 const p = require(packagePath);
 
-if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'heroku-postbuild') {
-	console.log('⤼ not a Heroku automatic deploy, skipping version inference');
+let environment;
+let commitish;
+if (process.env.CI) {
+	environment = 'ci';
+	commitish = process.env.GIT_COMMIT || process.env.CIRCLE_SHA1 || process.env.TRAVIS_COMMIT;
+} else if (process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'heroku-postbuild') {
+	environment = 'heroku';
+	commitish = process.env.SOURCE_VERSION;
+}
+
+if(!environment) {
+	console.log('⤼ not a Heroku automatic deploy or a CI build, skipping version inference');
 	process.exit(0);
 } else if(!p.repository) {
 	console.log('⊶ expected a repository field in your package.json');
@@ -21,8 +31,8 @@ if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'herok
 } else if(!p.repository.type === 'git') {
 	console.log('⊶ non-git repositories not supported');
 	process.exit(1);
-} else if(!process.env.SOURCE_VERSION) {
-	console.log('⁈ supposedly this is a Heroku automatic deploy but there\'s no SOURCE_VERSION. Here\'s your env:');
+} else if(!commitish) {
+	console.log('⁈ supposedly this is a Heroku automatic deploy or a CI build but there\'s no commit hash provided. Here\'s your env:');
 	console.log(process.env);
 	process.exit(1);
 } else {
@@ -32,7 +42,7 @@ if(process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'herok
 		err => err.stack
 	)(infer({
 		remote: repo.replace(/^git\+/i, ''),
-		commitish: process.env.SOURCE_VERSION,
+		commitish: commitish,
 		dirName: p.name.replace('/', '-'),
 		allCommits: process.argv.slice(2).includes('--all-commits')
 	}).then(version => {

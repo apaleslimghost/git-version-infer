@@ -1,6 +1,6 @@
 # heroku-version-infer
 
-infers app versions for automatic heroku deploys
+infers app versions for automatic heroku deploys and [ci builds](#which-ci)
 
 ```sh
 npm install --save @quarterto/heroku-version-infer
@@ -28,11 +28,19 @@ this assumption breaks down with Heroku review apps, where multiple concurrent b
 
 the inferred version is written to the `version` field in `package.json`. you're probably already used to writing `require('../package.json').version`.
 
-If you use squash merging via GitHub or you can otherwise guarantee that each commit to master is a version, then you can use the `--all-commits` flag to take *every* commit into account rather than just merges:
+if you use squash merging via GitHub or you can otherwise guarantee that each commit to master is a version, then you can use the `--all-commits` flag to take *every* commit into account rather than just merges:
 
 ```sh
 heroku-version-infer --all-commits
 ```
+
+## which ci
+
+the following ci systems are supported:
+
+  - [circle](https://circleci.com/)
+  - [jenkins](https://jenkins.io/) (through the [git plugin](https://wiki.jenkins.io/display/JENKINS/Git+Plugin))
+  - [travis](https://travis-ci.org/)
 
 ## licence
 
