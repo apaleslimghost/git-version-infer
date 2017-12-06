@@ -14,7 +14,7 @@ let commitish;
 if (process.env.CI) {
 	environment = 'ci';
 	commitish = process.env.GIT_COMMIT || process.env.CIRCLE_SHA1 || process.env.TRAVIS_COMMIT;
-} else if (process.env.npm_lifecycle_event && process.env.npm_lifecycle_event !== 'heroku-postbuild') {
+} else if (process.env.npm_lifecycle_event && process.env.npm_lifecycle_event === 'heroku-postbuild') {
 	environment = 'heroku';
 	commitish = process.env.SOURCE_VERSION;
 }
