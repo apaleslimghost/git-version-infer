@@ -4,7 +4,7 @@ const promisify = require('@quarterto/promisify');
 const mkTempDir = promisify(require('temp').track().mkdir);
 const spawn = require('cross-spawn-promise');
 
-module.exports = async function infer(remote, commitish, dirName) {
+module.exports = async function infer({remote, commitish, dirName, allCommits}) {
 	const dir = await mkTempDir(dirName || 'heroku-version-infer');
 	await spawn('git', ['clone', '--bare', remote, dir]);
 
@@ -15,10 +15,15 @@ module.exports = async function infer(remote, commitish, dirName) {
 		const shaResult = await spawn('git', ['rev-list', '--max-count=1', commitish]);
 		const sha = shaResult.toString().trim();
 
-		const mergesResult = await spawn('git', ['rev-list', sha, '--merges', '--first-parent']);
-		const merges = mergesResult.toString().split('\n').length;
+		const revListArgs = ['rev-list', sha];
+		if (!allCommits) {
+			revListArgs.push('--merges', '--first-parent');
+		}
 
-		return `${merges}.0.0-heroku-${sha.substr(0, 7)}`;
+		const revListResult = await spawn('git', revListArgs);
+		const majorVersion = revListResult.toString().split('\n').length;
+
+		return `${majorVersion}.0.0-heroku-${sha.substr(0, 7)}`;
 	} finally {
 		process.chdir(oldDir);
 	}

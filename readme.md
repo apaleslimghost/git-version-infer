@@ -28,6 +28,12 @@ this assumption breaks down with Heroku review apps, where multiple concurrent b
 
 the inferred version is written to the `version` field in `package.json`. you're probably already used to writing `require('../package.json').version`.
 
+If you use squash merging via GitHub or you can otherwise guarantee that each commit to master is a version, then you can use the `--all-commits` flag to take *every* commit into account rather than just merges:
+
+```sh
+heroku-version-infer --all-commits
+```
+
 ## licence
 
 mit

@@ -15,6 +15,9 @@
   },
   "homepage": "https://github.com/quarterto/heroku-version-infer#readme",
   "description": "",
+  "engines": {
+    "node": ">=6"
+  },
   "dependencies": {
     "@quarterto/log-promise": "^1.1.0",
     "@quarterto/promisify": "^1.0.0",
