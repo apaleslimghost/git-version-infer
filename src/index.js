@@ -5,7 +5,7 @@ const mkTempDir = promisify(require('temp').track().mkdir);
 const spawn = require('cross-spawn-promise');
 
 module.exports = async function infer({remote, commitish, dirName, allCommits}) {
-	const dir = await mkTempDir(dirName || 'heroku-version-infer');
+	const dir = await mkTempDir(dirName || 'git-version-infer');
 	await spawn('git', ['clone', '--bare', remote, dir]);
 
 	const oldDir = process.cwd();
@@ -23,7 +23,7 @@ module.exports = async function infer({remote, commitish, dirName, allCommits}) 
 		const revListResult = await spawn('git', revListArgs);
 		const majorVersion = revListResult.toString().split('\n').length;
 
-		return `${majorVersion}.0.0-heroku-${sha.substr(0, 7)}`;
+		return `${majorVersion}.0.0-${sha.substr(0, 7)}`;
 	} finally {
 		process.chdir(oldDir);
 	}

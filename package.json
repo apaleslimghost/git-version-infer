@@ -1,5 +1,5 @@
 {
-  "name": "@quarterto/heroku-version-infer",
+  "name": "@quarterto/git-version-infer",
   "version": "4.0.1",
   "main": "lib/index.js",
   "bin": "bin.js",
@@ -8,12 +8,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/quarterto/heroku-version-infer.git"
+    "url": "git+https://github.com/quarterto/git-version-infer.git"
   },
   "bugs": {
-    "url": "https://github.com/quarterto/heroku-version-infer/issues"
+    "url": "https://github.com/quarterto/git-version-infer/issues"
   },
-  "homepage": "https://github.com/quarterto/heroku-version-infer#readme",
+  "homepage": "https://github.com/quarterto/git-version-infer#readme",
   "description": "",
   "engines": {
     "node": ">=6"
