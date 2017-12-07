@@ -2,7 +2,7 @@
 
 const promisify = require('@quarterto/promisify');
 const mkTempDir = promisify(require('temp').track().mkdir);
-const spawn = require('cross-spawn-promise');
+const spawn = require('./spawn');
 
 module.exports = async function infer({remote, commitish, dirName, allCommits}) {
 	const dir = await mkTempDir(dirName || 'git-version-infer');

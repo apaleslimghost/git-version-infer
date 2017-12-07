@@ -2,7 +2,7 @@
 'use strict';
 
 const infer = require('./');
-const spawn = require('cross-spawn-promise');
+const spawn = require('./lib/spawn');
 const path = require('path');
 const logPromise = require('@quarterto/log-promise');
 const {check, runChecks} = require('@quarterto/run-checks');
@@ -20,9 +20,9 @@ const commitish =
 
 logPromise(
 	version => `inferred version ${version}`,
-	err => err.message
+	err => err.stack
 )(
-	runChecks(
+	runChecks([
 		check(
 			() => process.env.CI || process.env.npm_lifecycle_event === 'heroku-postbuild',
 			'⤼ not a Heroku automatic deploy or a CI build, skipping version inference',
@@ -31,6 +31,10 @@ logPromise(
 		check(
 			() => hasbin.sync('git'),
 			'⛭ no Git binary found in PATH'
+		),
+		check(
+			() => hasbin.sync('npm'),
+			'⛭ no npm binary found in PATH'
 		),
 		check(
 			() => p.repository,
@@ -47,8 +51,8 @@ logPromise(
 		check(
 			() => commitish,
 			`⁈ supposedly this is a Heroku automatic deploy or a CI build but there's no commit hash provided. Here's your env: ${util.inspect(process.env)}`
-		)
-	).then(() => {
+		),
+	]).then(() => {
 		const repo = typeof p.repository === 'string' ? p.repository : p.repository.url;
 
 		return infer({
@@ -59,9 +63,9 @@ logPromise(
 		}).then(version =>
 			spawn('npm', ['version', '--git-tag-version=false', version]).then(
 				() => version
-			);
-		))
-	)
+			)
+		);
+	})
 ).catch(
 	err => process.exit(err.fatal === false ? 0 : 1)
 );
