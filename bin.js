@@ -33,10 +33,6 @@ logPromise(
 			'⛭ no Git binary found in PATH'
 		),
 		check(
-			() => hasbin.sync('npm'),
-			'⛭ no npm binary found in PATH'
-		),
-		check(
 			() => p.repository,
 			'⊶ expected a repository field in your package.json'
 		),
