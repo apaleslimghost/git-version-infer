@@ -22,6 +22,7 @@
     "@quarterto/log-promise": "^1.1.0",
     "@quarterto/promisify": "^1.0.0",
     "@quarterto/run-checks": "^1.3.0",
+    "@quarterto/set-package-version": "^1.1.0",
     "@quarterto/spawn": "^1.1.0",
     "babel-runtime": "^6.11.6",
     "cross-spawn-promise": "^0.6.0",
