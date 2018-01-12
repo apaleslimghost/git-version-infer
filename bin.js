@@ -2,9 +2,9 @@
 'use strict';
 
 const infer = require('./');
-const spawn = require('./lib/spawn');
 const path = require('path');
 const logPromise = require('@quarterto/log-promise');
+const setPackageVersion = require('@quarterto/set-package-version');
 const {check, runChecks} = require('@quarterto/run-checks');
 const util = require('util');
 const hasbin = require('hasbin');
@@ -61,7 +61,7 @@ logPromise(
 			dirName: p.name.replace('/', '-'),
 			allCommits: process.argv.slice(2).includes('--all-commits')
 		}).then(version =>
-			spawn('npm', ['version', '--git-tag-version=false', version]).then(
+			setPackageVersion(version).then(
 				() => version
 			)
 		);
