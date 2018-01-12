@@ -24,7 +24,7 @@ because you want to tag versions for things like error reporting, QA, Tim writin
 
 the version number is the number of merge commits into the history of the deployed commit. if you have Github branch protection, there will be no code changes on `master` without an associated merge, so a particular version will always contain the same code. this number will increase if *and only if* there are code changes, which is exactly what we need from a version number.
 
-this assumption breaks down with Heroku review apps, where multiple concurrent branches with the same number of merges may be deployed at the same time. to disambiguate in this case, the first 7 characters of the commit hash are appended to the version.
+this assumption breaks down with Heroku review apps, where multiple concurrent branches with the same number of merges may be deployed at the same time. to disambiguate in this case, the first 7 characters of the commit hash are appended to the version as semver build metadata.
 
 the inferred version is written to the `version` field in `package.json`. you're probably already used to writing `require('../package.json').version`.
 
