@@ -23,7 +23,7 @@ module.exports = async function infer({remote, commitish, dirName, allCommits}) 
 		const revListResult = await spawn('git', revListArgs);
 		const majorVersion = revListResult.toString().split('\n').length;
 
-		return `${majorVersion}.0.0-${sha.substr(0, 7)}`;
+		return `${majorVersion}.0.0+${sha.substr(0, 7)}`;
 	} finally {
 		process.chdir(oldDir);
 	}
